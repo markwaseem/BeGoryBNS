@@ -9,7 +9,7 @@ export default function AboutPage() {
       <section
         className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, hsl(218, 65%, 14%) 0%, hsl(218, 55%, 22%) 50%, hsl(204, 72%, 30%) 100%)\",
+          background: "linear-gradient(135deg, hsl(218, 65%, 14%) 0%, hsl(218, 55%, 22%) 50%, hsl(204, 72%, 30%) 100%)",
         }}
       >
         {/* Decorative circles */}
@@ -69,7 +69,7 @@ export default function AboutPage() {
 
             {/* Vision Card */}
             <div className="bg-gray-50/50 p-6 sm:p-8 md:p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-12 h-12 rounded-2xl bg-sky/5 flex items-center justify-center text-sky text-2xl mb-5">👁️‍🗨️</div>
+              <div className="w-12 h-12 rounded-2xl bg-sky/5 flex items-center justify-center text-sky text-2xl mb-5">👁️‍عون</div>
               <h2 className="text-xl md:text-2xl font-bold text-navy mb-4">رؤيتنا</h2>
               <p className="text-gray-600 leading-relaxed text-sm md:text-base">
                 أن نكون المنصة العربية الأولى والموثوقة في تقديم برامج الشفاء الذاتي والتعافي السلوكي، لتمكين مجتمع واعي، متعافي، وقادر على مواجهة تحديات الحياة المعاصرة بمرونة نفسية عالية.
