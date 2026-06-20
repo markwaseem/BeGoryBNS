@@ -27,92 +27,111 @@ export default function Navbar() {
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-border py-2"
+          : "bg-transparent py-4"
       }`}
     >
-      <nav className="container-rtl flex items-center justify-between h-16 md:h-20">
+      <nav className="container-rtl flex items-center justify-between h-16 md:h-20 px-4 max-w-7xl mx-auto">
         {/* Logo / Brand */}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-3 group"
+          className="flex items-center gap-3 group focus:outline-none"
         >
           <img
             src="/begory-logo.png"
             alt="شعار بي جوري"
-            className="w-11 h-11 rounded-full object-cover shadow-md group-hover:shadow-lg transition-shadow"
+            className="h-10 w-auto md:h-12 object-contain transition-transform group-hover:scale-105"
           />
-          <div className="text-right">
-            <p className="font-bold text-lg leading-none text-navy">بي جوري</p>
-            <p className="text-[10px] text-sky leading-none mt-0.5 hidden sm:block">
-              للصحة النفسية ومكافحة الإدمان
-            </p>
-          </div>
+          <span
+            className={`font-bold text-xl md:text-2xl tracking-wide transition-colors ${
+              scrolled ? "text-navy" : "text-gold"
+            }`}
+          >
+            بي جوري
+          </span>
         </button>
 
-        {/* Desktop Links */}
-        <ul className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <button
-                onClick={() => navigate(link.href)}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                  location === link.href
-                    ? "bg-navy text-white shadow-sm"
-                    : "text-navy hover:bg-navy/10"
-                }`}
-              >
-                {link.label}
-              </button>
-            </li>
-          ))}
+        {/* Desktop Navigation */}
+        <ul className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => {
+            const isActive = location === link.href;
+            return (
+              <li key={link.href}>
+                <button
+                  onClick={() => navigate(link.href)}
+                  className={`text-base font-bold transition-all duration-300 relative py-2 cursor-pointer focus:outline-none ${
+                    isActive
+                      ? scrolled
+                        ? "text-navy"
+                        : "text-gold"
+                      : scrolled
+                      ? "text-muted-foreground hover:text-navy"
+                      : "text-white/80 hover:text-gold"
+                  }`}
+                >
+                  {link.label}
+                  {/* Active Line Indicator */}
+                  {isActive && (
+                    <span
+                      className={`absolute bottom-0 right-0 left-0 h-0.5 rounded-full transition-all ${
+                        scrolled ? "bg-navy" : "bg-gold"
+                      }`}
+                    />
+                  )}
+                </button>
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Menu Button */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-navy/10 transition-colors"
+          className="md:hidden flex flex-col gap-1.5 p-2 rounded-lg focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="القائمة"
         >
           <span
-            className={`block w-6 h-0.5 bg-navy transition-transform duration-300 ${
-              menuOpen ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`block w-6 h-0.5 transition-all duration-300 ${
+              scrolled ? "bg-navy" : "bg-white"
+            } ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
           />
           <span
-            className={`block w-6 h-0.5 bg-navy transition-opacity duration-300 ${
-              menuOpen ? "opacity-0" : ""
-            }`}
+            className={`block w-6 h-0.5 transition-all duration-300 ${
+              scrolled ? "bg-navy" : "bg-white"
+            } ${menuOpen ? "opacity-0" : ""}`}
           />
           <span
-            className={`block w-6 h-0.5 bg-navy transition-transform duration-300 ${
-              menuOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`block w-6 h-0.5 transition-all duration-300 ${
+              scrolled ? "bg-navy" : "bg-white"
+                } ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
           />
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 bg-white/98 backdrop-blur-md border-t border-border ${
-          menuOpen ? "max-h-80 py-4" : "max-h-0"
+        className={`md:hidden overflow-hidden transition-all duration-300 shadow-xl ${
+          menuOpen ? "max-h-80 py-4 bg-white/98 backdrop-blur-md border-t border-border" : "max-h-0"
         }`}
       >
-        <ul className="container-rtl flex flex-col gap-1">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <button
-                onClick={() => navigate(link.href)}
-                className={`w-full text-right px-4 py-3 rounded-lg text-base font-semibold transition-all ${
-                  location === link.href
-                    ? "bg-navy text-white"
-                    : "text-navy hover:bg-navy/10"
-                }`}
-              >
-                {link.label}
-              </button>
-            </li>
-          ))}
+        <ul className="container-rtl flex flex-col gap-1 px-4">
+          {navLinks.map((link) => {
+            const isActive = location === link.href;
+            return (
+              <li key={link.href}>
+                <button
+                  onClick={() => navigate(link.href)}
+                  className={`w-full text-right px-4 py-3 rounded-xl text-base font-bold transition-all ${
+                    isActive
+                      ? "bg-navy text-white"
+                      : "text-navy hover:bg-navy/5"
+                  }`}
+                >
+                  {link.label}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </header>

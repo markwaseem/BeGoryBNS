@@ -41,9 +41,9 @@
 
 :root {
   /* BeGory Brand Colors */
-  --navy: 218 65% 18%;          /* Deep Navy Blue - trust, structure */
-  --sky: 204 72% 55%;           /* Soft Sky Blue - accents, active states */
-  --gold: 42 60% 78%;           /* Warm Golden Beige - comfort, hope */
+  --navy: 218 65% 15%;          /* Deep Navy Blue - trust, structure */
+  --sky: 204 72% 45%;           /* Soft Sky Blue - accents, active states */
+  --gold: 42 70% 65%;           /* Warm Golden Beige - comfort, hope */
 
   --background: 210 20% 98%;
   --foreground: 218 65% 12%;
