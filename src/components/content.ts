@@ -162,3 +162,8 @@ export const CONTENT = {
     },
   ]
 };
+export const donationInfo = {
+  text: "ادعم رسالتنا", // النص الذي سيظهر على الزر
+  url: "https://your-donation-link-here.com", // رابط منصة التبرع الخاصة بكم
+  isVisible: true,
+};
