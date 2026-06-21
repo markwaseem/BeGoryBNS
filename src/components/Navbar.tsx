@@ -1,25 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
-  const [location, setLocation] = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 25) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-const navItems = [
+const navLinks = [
   { href: "/", label: "الرئيسية" },
   { href: "/about", label: "عن بي جوري" },
   { href: "/courses", label: "الكورسات" },
@@ -27,115 +9,126 @@ const navItems = [
   { href: "/videos", label: "مكتبة الفيديوهات" },
 ];
 
+export default function Navbar() {
+  const [location] = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md py-4 text-navy" : "bg-transparent py-6 text-white"
+    <header
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100 py-2" : "bg-transparent py-4"
       }`}
-      style={{ direction: "rtl" }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          
-          {/* شعار المؤسسة والاسم */}
-          <div className="flex-shrink-0 flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 cursor-pointer">
-              <img 
-                src="/begory-logo.png"  // تأكد من وجود الشرطة المائلة / قبل اسم الصورة مباشرة
-                alt="BeGory Logo" 
-                className="h-12 w-12 object-contain" 
-                />
-              <span className={`text-2xl font-black tracking-wide ${scrolled ? "text-navy" : "text-white"}`}>
-                بي جوري
-              </span>
-            </Link>
-          </div>
-
-          {/* روابط التنقل للكمبيوتر */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => {
-              const isActive = location === item.href;
-              return (
-                <Link key={item.href} href={item.href}>
-                  <span
-                    className={`font-semibold text-lg pb-1 border-b-2 transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? "border-gold text-gold"
-                        : `border-transparent hover:text-gold ${
-                            scrolled ? "text-navy" : "text-white"
-                          }`
-                    }`}
-                  >
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* زر ادعم رسالتنا للكمبيوتر */}
-          <div className="hidden md:block">
-            <button
-              onClick={() => setLocation("/donate")}
-              className={`font-bold py-2.5 px-6 rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 cursor-pointer text-base ${
-                scrolled
-                  ? "bg-navy text-white hover:bg-opacity-90"
-                  : "bg-gold text-navy hover:brightness-110"
-              }`}
-            >
-              ادعم رسالتنا 🤍
-            </button>
-          </div>
-
-          {/* زر قائمة الموبايل */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${scrolled ? "text-navy" : "text-white"}`}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+      <nav className="flex items-center justify-between h-16 md:h-20 px-4 max-w-7xl mx-auto w-full" style={{ direction: "rtl" }}>
+        
+        {/* شعار المؤسسة */}
+        <div className="flex-shrink-0 flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3 cursor-pointer">
+            <img
+              src="/begory-logo.png"
+              alt="BeGory Logo"
+              className="w-10 h-10 object-contain rounded-full bg-transparent shadow-sm"
+            />
+            <span className={`text-2xl font-black tracking-wide ${scrolled ? "text-navy" : "text-gold"}`}>
+              بي جوري
+            </span>
+          </Link>
         </div>
-      </div>
 
-      {/* قائمة الموبايل المنسدلة */}
-      {isOpen && (
-        <div className="md:hidden bg-white shadow-xl animate-in fade-in slide-in-from-top-5 duration-200">
-          <div className="px-4 pt-2 pb-6 space-y-2 flex flex-col border-t border-gray-100">
-            {navItems.map((item) => {
-              const isActive = location === item.href;
+        {/* روابط الكمبيوتر */}
+        <div className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => {
+            const isActive = location === link.href;
+            return (
+              <Link key={link.href} href={link.href}>
+                <a
+                  className={`text-base font-bold transition-all duration-300 relative py-2 cursor-pointer ${
+                    isActive
+                      ? scrolled
+                        ? "text-navy"
+                        : "text-gold"
+                      : scrolled
+                      ? "text-gray-500 hover:text-navy"
+                      : "text-white/90 hover:text-gold"
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span
+                      className={`absolute bottom-0 right-0 left-0 h-0.5 rounded-full ${
+                        scrolled ? "bg-navy" : "bg-gold"
+                      }`}
+                    />
+                  )}
+                </a>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* زر التبرع للكمبيوتر */}
+        <div className="hidden md:block">
+          <Link href="/donate">
+            <a className="bg-gradient-to-r from-gold to-yellow-500 text-navy font-bold px-6 py-2 rounded-full transition-transform hover:scale-105 shadow-md">
+              🤍 ادعم رسالتنا
+            </a>
+          </Link>
+        </div>
+
+        {/* زر قائمة الموبايل */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2 rounded-lg z-50"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2 bg-navy" : scrolled ? "bg-navy" : "bg-white"}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "opacity-0 bg-navy" : scrolled ? "bg-navy" : "bg-white"}`} />
+          <span className={`block w-6 h-0.5 transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2 bg-navy" : scrolled ? "bg-navy" : "bg-white"}`} />
+        </button>
+
+        {/* قائمة الموبايل المنسدلة */}
+        <div
+          className={`md:hidden absolute top-full right-0 left-0 overflow-hidden transition-all duration-300 ease-in-out shadow-xl ${
+            menuOpen ? "max-h-96 opacity-100 bg-white border-t border-gray-100 py-4" : "max-h-0 opacity-0 pointer-events-none"
+          }`}
+        >
+          <div className="flex flex-col gap-2 px-4">
+            {navLinks.map((link) => {
+              const isActive = location === link.href;
               return (
-                <Link key={item.href} href={item.href}>
-                  <span
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-3 py-3 rounded-xl text-lg font-medium cursor-pointer transition-colors ${
-                      isActive
-                        ? "bg-gray-50 text-gold font-bold"
-                        : "text-navy hover:bg-gray-50"
+                <Link key={link.href} href={link.href}>
+                  <a
+                    className={`w-full text-right px-5 py-3.5 rounded-xl text-base font-bold transition-all ${
+                      isActive ? "bg-navy text-white shadow-sm" : "text-navy hover:bg-gray-50 active:bg-gray-100"
                     }`}
                   >
-                    {item.label}
-                  </span>
+                    {link.label}
+                  </a>
                 </Link>
               );
             })}
             
-            {/* زر ادعم رسالتنا للموبايل */}
-            <div className="pt-4 px-3">
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  setLocation("/donate");
-                }}
-                className="w-full bg-navy text-white font-bold py-3 px-4 rounded-xl shadow-md text-center text-lg block hover:bg-opacity-90"
-              >
-                ادعم رسالتنا 🤍
-              </button>
+            {/* زر التبرع للموبايل */}
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <Link href="/donate">
+                <a className="flex justify-center w-full bg-gradient-to-r from-gold to-yellow-500 text-navy font-bold px-6 py-3 rounded-xl shadow-md">
+                  🤍 ادعم رسالتنا
+                </a>
+              </Link>
             </div>
           </div>
         </div>
-      )}
-    </nav>
+      </nav>
+    </header>
   );
 }
