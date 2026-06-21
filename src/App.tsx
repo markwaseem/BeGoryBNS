@@ -5,7 +5,7 @@ import AboutPage from "./pages/AboutPage";
 import CoursesPage from "./pages/CoursesPage";
 import FreedomJourneyPage from "./pages/FreedomJourneyPage";
 import VideoGalleryPage from "./pages/VideoGalleryPage";
-// import DonatePage from "@/pages/DonatePage"; // أضفه إذا كنت تستخدمه
+import DonatePage from "./pages/DonatePage"; // أضفه إذا كنت تستخدمه
 import NotFound from "./pages/not-found";
 
 function Router() {
