@@ -4,7 +4,7 @@ import { Heart, CreditCard, Phone, Check } from "lucide-react";
 export default function DonatePage() {
   // حالة (State) لتتبع هل تم نسخ الرقم أم لا
   const [isCopied, setIsCopied] = useState(false);
-  const vodafoneNumber = "+20 10 03600913";
+  const vodafoneNumber = "+201003600913";
 
   // دالة نسخ الرقم
   const handleCopyNumber = () => {
