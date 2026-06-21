@@ -1,5 +1,5 @@
 // ─── Video Data ──────────────────────────────────────────────────────────────
-// To add or swap videos, only edit this array.
+// To add or swap videos, only  edit this array.
 // Each item needs: id, title, description, embedId (YouTube video ID), category.
 
 const videos = [
@@ -7,7 +7,7 @@ const videos = [
     id: 1,
     title: "دائرة ثقة",
     description: "تعرف على نفسك بشكل افضل من خلال فهم دائرة ثقتك وكيفية توسيعها بشكل صحي",
-    embedId: "https://youtu.be/qkFJd7_6fO4?si=_HeMYhkFwSK_69tJ",
+    embedId: "3J78gvRLAGg",
     category: "توعية",
   },
   {
